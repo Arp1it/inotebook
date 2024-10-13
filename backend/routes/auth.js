@@ -37,4 +37,49 @@ router.post("/createuser", [
 
 })
 
+
+
+// Create a user using Post "/api/auth/login". Dosn't required auth
+router.post("/login", [
+  body('email', "enter a valid email").isEmail(),
+  body('password', "Please enter password").exists()
+], async(req, res)=>{
+
+  const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+
+    const {email, password} = req.body;
+
+    try{
+      let user = await User.findOne({email})
+
+      if(!user){
+        return res.status(400).json({error: "Please enter a valid Credentials"});
+      };
+
+      const passwordcompare = await bcrypt.compare(password, user.password);
+
+      if(!passwordcompare){
+        return res.status(400).json({error: "Please enter a valid Credentials"});
+      };
+
+      const payload = {
+        user:{
+          id: user.id
+        }
+      }
+
+      const authtoken = jwt.sign(payload, JWT_SECRET)
+      res.send({authtoken: authtoken})
+      
+    }catch(error){
+      console.log(error)
+      res.status(500).json("Internal Server error occured!")
+    }
+
+})
+
+
 module.exports = router
