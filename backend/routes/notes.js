@@ -43,7 +43,7 @@ router.post("/addnote", fetchuser, [
 })
 
 // Route 3: Update an existing note using PUT "/api/notes/updatenote". Login required
-router.post("/updatenote/:id", fetchuser, async (req, res) => {
+router.put("/updatenote/:id", fetchuser, async (req, res) => {
 
     try {
         const { title, description, tag } = req.body;
