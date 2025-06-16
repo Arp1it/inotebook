@@ -1,5 +1,5 @@
 import './App.css';
-import{
+import {
   BrowserRouter as Router,
   Route,
   Routes as Switch
@@ -8,19 +8,24 @@ import{
 import Navbar from './componenets/Navbar';
 import Home from './componenets/Home';
 import About from './componenets/About';
+import NoteState from './context/notes/NoteState';
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Switch>
+    <>
+      <NoteState>
+        <Router>
+          <Navbar />
+          <Switch>
 
-        <Route path="/" exact element={<Home />} />
+            <Route path="/" exact element={<Home />} />
 
-        <Route path="/about" exact element={<About />} />
+            <Route path="/about" exact element={<About />} />
 
-      </Switch>
-    </Router>
+          </Switch>
+        </Router>
+      </NoteState>
+    </>
   );
 }
 
