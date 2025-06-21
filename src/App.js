@@ -9,6 +9,7 @@ import Navbar from './componenets/Navbar';
 import Home from './componenets/Home';
 import About from './componenets/About';
 import NoteState from './context/notes/NoteState';
+import Alert from './componenets/Alert';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
+          {/* <Alert /> */}
 
           <div className="container my-3">
           <Switch>
