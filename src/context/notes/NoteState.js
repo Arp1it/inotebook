@@ -85,7 +85,7 @@ const NoteState = (props) => {
     // Logic to edit in client!
     for (let index = 0; index < notes.length; index++) {
       const element = notes[index];
-      if (element.id == id) {
+      if (element.id === id) {
         element.title = title;
         element.description = description;
         element.tag = tag;
