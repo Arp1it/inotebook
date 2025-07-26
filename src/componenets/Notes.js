@@ -6,7 +6,7 @@ import { use } from 'react';
 
 const Note = () => {
     const context = useContext(noteContext);
-    const { notes, getNotes } = context;
+    const { notes, getNotes, editNote } = context;
 
     useEffect(() => {
         getNotes()
@@ -14,16 +14,18 @@ const Note = () => {
     }, [])
 
     const ref = useRef(null);
-    const [ note, setNote ] = useState({ etitle: "", edescription: "", etag: "" });
+    const refClose = useRef(null);
+    const [ note, setNote ] = useState({ id: "", etitle: "", edescription: "", etag: "" });
 
     const updatenote = (currentnote) => {
         ref.current.click();
-        setNote({ etitle: currentnote.title, edescription: currentnote.description, etag: currentnote.tag });
+        setNote({ id: currentnote._id, etitle: currentnote.title, edescription: currentnote.description, etag: currentnote.tag });
     }
 
     const handleClick = (e) => {
         console.log("Updating the note...", note);
-        e.preventDefault(); // Prevent the default form submission behavior
+        editNote(note.id, note.etitle, note.edescription, note.etag);
+        refClose.current.click();
     }
 
     const onChange = (e) => {
@@ -40,8 +42,8 @@ const Note = () => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Note</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Note</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="container my-5">
                             <form>
@@ -58,7 +60,7 @@ const Note = () => {
                                     <input type="text" className="form-control" id="etag" name='etag' onChange={onChange} value={note.etag} />
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={refClose}>Close</button>
                                     <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
                                 </div>
                             </form>
