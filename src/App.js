@@ -10,6 +10,8 @@ import Home from './componenets/Home';
 import About from './componenets/About';
 import NoteState from './context/notes/NoteState';
 import Alert from './componenets/Alert';
+import Login from './componenets/Login';
+import Sign from './componenets/Sign';
 
 function App() {
   return (
@@ -25,6 +27,10 @@ function App() {
             <Route path="/" exact element={<Home />} />
 
             <Route path="/about" exact element={<About />} />
+
+            <Route path="/login" exact element={<Login />} />
+
+            <Route path="/sign" exact element={<Sign />} />
 
           </Switch>
           </div>

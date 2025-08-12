@@ -16,7 +16,7 @@ const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul className="navbar-nav">
+                    <ul className="navbar-nav me-auto">
                         <li className="nav-item">
                             <Link className={`nav-link ${location.pathname === '/' ? 'active' : ""}`} aria-current="page" to="/">Home</Link>
                         </li>
@@ -24,6 +24,10 @@ const Navbar = () => {
                             <Link className={`nav-link ${location.pathname === '/about' ? 'active' : ""}`} to="/about">About</Link>
                         </li>
                     </ul>
+                    <div className='d-flex gap-2'>
+                        <Link className='btn btn-success mx-1' to='/login' role='button'>Login</Link>
+                        <Link className='btn btn-primary mx-1' to='/sign' role='button'>Sign</Link>
+                    </div>
                 </div>
             </div>
         </nav>

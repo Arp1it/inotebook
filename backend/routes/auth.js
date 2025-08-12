@@ -16,6 +16,8 @@ router.post("/createuser", [
   body('password', "password length must be at least 5 chars").isLength({ min: 5 })
 ], async (req, res) => {
 
+  let success = false
+
   const result = validationResult(req);
   if (result.isEmpty()) {
 
@@ -28,13 +30,13 @@ router.post("/createuser", [
       password: secpass
     })
       .then(user => res.json(
-        { authToken: jwt.sign({ user: user.id }, 'shhhhh') }
+        { success: true, authToken: jwt.sign({ user: user.id }, 'shhhhh') }
       ))
-      .catch(err => res.status(500).json({ error: "Please enter a unique value for email", err }))
+      .catch(err => res.status(500).json({ success, error: "Please enter a unique value for email", err }))
 
   }
 
-  res.status(400).json({ errors: result.array() });
+  res.status(400).json({ success, errors: result.array() });
 
 })
 
@@ -45,6 +47,7 @@ router.post("/login", [
   body('email', "enter a valid email").isEmail(),
   body('password', "Please enter password").exists()
 ], async (req, res) => {
+  let success = false;
 
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -57,13 +60,13 @@ router.post("/login", [
     let user = await User.findOne({ email })
 
     if (!user) {
-      return res.status(400).json({ error: "Please enter a valid Credentials" });
+      return res.status(400).json({ success, error: "Please enter a valid Credentials" });
     };
 
     const passwordcompare = await bcrypt.compare(password, user.password);
 
     if (!passwordcompare) {
-      return res.status(400).json({ error: "Please enter a valid Credentials" });
+      return res.status(400).json({ success, error: "Please enter a valid Credentials" });
     };
 
     const payload = {
@@ -73,7 +76,8 @@ router.post("/login", [
     }
 
     const authtoken = jwt.sign(payload, JWT_SECRET)
-    res.send({ authtoken: authtoken })
+    success = true;
+    res.send({ success, authtoken: authtoken })
 
   } catch (error) {
     console.log(error)
