@@ -2,14 +2,16 @@ import React, { useState, useContext } from 'react'
 import noteContext from '../context/notes/noteContext'
 
 
-const AddNote = () => {
+const AddNote = (props) => {
     const context = useContext(noteContext);
     const { addNote } = context;
+    const { showAlert } = props;
 
     const [ note, setNote ] = useState({ title: "", description: "", tag: "default" });
     const handleClick = (e) => {
         e.preventDefault(); // Prevent the default form submission behavior
         addNote(note.title, note.description, note.tag);
+        showAlert("Successfully Added", "success");
         setNote({title: "", description: "", tag: ""})
     }
 

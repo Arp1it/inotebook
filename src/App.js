@@ -12,27 +12,41 @@ import NoteState from './context/notes/NoteState';
 import Alert from './componenets/Alert';
 import Login from './componenets/Login';
 import Sign from './componenets/Sign';
+import { useState } from 'react';
 
 function App() {
+  const [alert, setAlert] = useState(null)
+
+  const showAlert = (message, type) => {
+    setAlert(null)
+    setAlert({
+      msg: message,
+      type: type
+    });
+    setTimeout(() => {
+      setAlert(null)
+    }, 2333);
+  }
+
   return (
     <>
       <NoteState>
         <Router>
           <Navbar />
-          {/* <Alert /> */}
+          <Alert alert={alert} />
 
           <div className="container my-3">
-          <Switch>
+            <Switch>
 
-            <Route path="/" exact element={<Home />} />
+              <Route path="/" exact element={<Home showAlert={showAlert} />} />
 
-            <Route path="/about" exact element={<About />} />
+              <Route path="/about" exact element={<About />} />
 
-            <Route path="/login" exact element={<Login />} />
+              <Route path="/login" exact element={<Login showAlert={showAlert} />} />
 
-            <Route path="/sign" exact element={<Sign />} />
+              <Route path="/sign" exact element={<Sign showAlert={showAlert} />} />
 
-          </Switch>
+            </Switch>
           </div>
         </Router>
       </NoteState>
