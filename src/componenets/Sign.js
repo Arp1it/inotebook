@@ -39,6 +39,7 @@ const Sign = (props) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <h2 className='my-3'>Sign up</h2>
         <div className="mb-3">
           <label for="name" className="form-label">Name</label>
           <input type="text" className="form-control" id="name" name="name" onChange={onChange} minLength={3} required />
