@@ -30,7 +30,7 @@ router.post("/createuser", [
       password: secpass
     })
       .then(user => res.json(
-        { success: true, authToken: jwt.sign({ user: user.id }, 'shhhhh') }
+        { success: true, authtoken: jwt.sign({ user: user.id }, JWT_SECRET) }
       ))
       .catch(err => res.status(500).json({ success, error: "Please enter a unique value for email", err }))
 

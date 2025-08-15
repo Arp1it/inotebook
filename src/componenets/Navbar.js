@@ -1,8 +1,15 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
     const location = useLocation()
+
+    let navigate = useNavigate()
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login")
+    }
 
     React.useEffect(() => {
         console.log(location.pathname);
@@ -25,8 +32,14 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <div className='d-flex gap-2'>
-                        <Link className='btn btn-success mx-1' to='/login' role='button'>Login</Link>
-                        <Link className='btn btn-primary mx-1' to='/sign' role='button'>Sign</Link>
+                        {
+                            localStorage.getItem("token")
+                                ? <button className='btn btn-success mx-1' onClick={handleLogout}>Logout</button>
+                                : <>
+                                    <Link className='btn btn-success mx-1' to='/login' role='button'>Login</Link>
+                                    <Link className='btn btn-primary mx-1' to='/sign' role='button'>Sign</Link>
+                                </>
+                        }
                     </div>
                 </div>
             </div>
